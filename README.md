@@ -74,7 +74,7 @@ Summary flow:
 9. Reports provide operational and management visibility.
 10. Remaining dues or balances can be migrated during season closing.
 
-Detailed workflow: [business-workflow.md](business-workflow.md)
+Detailed workflow: [docs/business-workflow.md](docs/business-workflow.md)
 
 ## Major Modules
 
@@ -96,7 +96,7 @@ infrastructure:
 - User, role, permission, and administration
 - API and integration
 
-Detailed module catalog: [modules.md](modules.md)
+Detailed module catalog: [docs/modules.md](docs/modules.md)
 
 ## High-Level Architecture
 
@@ -128,7 +128,7 @@ Major layers:
 - **Deployment Layer**: Windows/IIS style hosting with PHP runtime and local
   Python bridge where weighing hardware is installed.
 
-Detailed architecture: [architecture.md](architecture.md)
+Detailed architecture: [docs/architecture.md](docs/architecture.md)
 
 ## Technology Stack
 
@@ -172,7 +172,7 @@ Key design ideas:
 - Storage movement uses both history and current-state tables.
 - Collections remain separate audit records.
 
-Detailed database design: [database-design.md](database-design.md)
+Detailed database design: [docs/database-design.md](docs/database-design.md)
 
 ## Challenges & Solutions
 
@@ -226,10 +226,10 @@ Screenshot rules:
 
 | Document | Purpose |
 | --- | --- |
-| [business-workflow.md](business-workflow.md) | End-to-end cold storage business workflow and rules. |
-| [modules.md](modules.md) | Module catalog with business purpose, tables, controllers, and rules. |
-| [architecture.md](architecture.md) | Layers, request flow, integrations, weight bridge, and deployment model. |
-| [database-design.md](database-design.md) | Conceptual database entities, relationships, and ER diagrams. |
+| [docs/business-workflow.md](docs/business-workflow.md) | End-to-end cold storage business workflow and rules. |
+| [docs/modules.md](docs/modules.md) | Module catalog with business purpose, tables, controllers, and rules. |
+| [docs/architecture.md](docs/architecture.md) | Layers, request flow, integrations, weight bridge, and deployment model. |
+| [docs/database-design.md](docs/database-design.md) | Conceptual database entities, relationships, and ER diagrams. |
 
 ## Confidentiality Notice
 
