@@ -89,8 +89,8 @@ loan, delivery, and collection workflows.
 
 - Customer information must be available before booking and financial
   settlement.
-- Sensitive customer identity, bank, and document details must not be exposed in
-  public repositories.
+- Sensitive customer identity, bank, and document details are excluded from the
+  public repository.
 - Customer account data supports collection, refund, and due workflows.
 
 ## 3. Booking Module
@@ -215,7 +215,7 @@ Track payments received against bookings, delivery dues, and sale obligations.
 - Advance collections reduce final payable amounts during delivery settlement.
 - Due collections must remain traceable to the delivery or sale that created the
   receivable.
-- Public documentation must use anonymized payment examples only.
+- Public payment examples use anonymized data only.
 
 ## 6. Store Receive Module
 
@@ -442,7 +442,7 @@ loan, collection, dues, and daily storage activity.
 - Reports should support company, season, customer, booking, SR, and date
   filtering.
 - Reports should reconcile operational stock with financial status.
-- Exported reports must not expose confidential data in public examples.
+- Exported report examples use sanitized or demo data.
 
 ## 11. Seed Stock and Potato Sales Module
 
@@ -552,8 +552,8 @@ reporting functions for the broader ERP.
 - Voucher posting should preserve auditability.
 - Ledger summaries should be filterable by date, account, party, and cost
   center where applicable.
-- Public case studies should describe finance workflows conceptually without
-  exposing real ledger data.
+- This case study describes finance workflows conceptually without exposing real
+  ledger data.
 
 ## 13. User, Role, Permission, and Administration Module
 
@@ -615,8 +615,8 @@ and administrative module setup.
 - Users should only access modules allowed by assigned roles and permissions.
 - Login and activity logs support auditability.
 - Token records support API/desktop integrations.
-- Public documentation must not expose real users, login logs, MAC addresses, IP
-  addresses, or token data.
+- Public documentation excludes real users, login logs, MAC addresses, IP
+  addresses, and token data.
 
 ## 14. API and Integration Module
 

@@ -185,13 +185,14 @@ Detailed database design: [docs/database-design.md](docs/database-design.md)
 | Network retries can duplicate weight data. | Use machine and desktop sync identifiers for retry-safe synchronization. |
 | Delivery can over-release stock if not controlled. | Validate delivery quantity against weighted reserved stock. |
 | Delivery includes stock, rent, loan, collection, and due logic. | Treat delivery as a settlement workflow, not a simple issue transaction. |
-| Public documentation must avoid sensitive data. | Use conceptual entities, sanitized descriptions, and no source/database dumps. |
+| Public documentation needs to protect sensitive data. | Use conceptual entities, sanitized descriptions, and no source/database dumps. |
 
-## Screenshots Placeholder
+## Screenshots
 
-Screenshots can be added later only after sanitization.
+Sanitized screenshots will be added to show the operational screens and report
+outputs without exposing production data.
 
-Recommended placeholders:
+Planned screenshot coverage:
 
 - `screenshots/01-dashboard-sanitized.png`
 - `screenshots/02-booking-form-sanitized.png`
@@ -201,13 +202,12 @@ Recommended placeholders:
 - `screenshots/06-delivery-settlement-sanitized.png`
 - `screenshots/07-reporting-sanitized.png`
 
-Screenshot rules:
+Sanitization approach:
 
-- Remove company logos if confidential.
-- Remove customer names, phone numbers, addresses, account numbers, and identity
-  data.
-- Use demo records or blurred/anonymized values.
-- Do not include production URLs or internal network paths.
+- Confidential company branding is removed where required.
+- Customer names, phone numbers, addresses, account numbers, and identity data
+  are replaced with demo or anonymized values.
+- Production URLs and internal network paths are excluded.
 
 ## Lessons Learned
 
@@ -215,11 +215,12 @@ Screenshot rules:
   designing screens or tables.
 - In cold storage, delivery is the most complex point because stock, weight,
   rent, loan, collection, and due settlement converge there.
-- Hardware integration should be isolated from the ERP core through stable APIs.
+- Hardware integration is most maintainable when isolated from the ERP core
+  through stable APIs.
 - Seasonal systems need strong references and reporting boundaries.
-- Current state and movement history should both be modeled when physical stock
+- Current state and movement history both need to be modeled when physical stock
   location matters.
-- Public case studies should demonstrate architecture and business thinking
+- Public case studies can demonstrate architecture and business thinking
   without exposing proprietary implementation details.
 
 ## Documentation Map

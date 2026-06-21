@@ -8,9 +8,9 @@ workflows, service classes for critical stock and delivery rules, a relational
 database, and external integration points for hardware weight capture and
 desktop/API clients.
 
-This document is written for a public GitHub case study. It explains the
-architecture from an enterprise ERP perspective without exposing proprietary
-source code, production URLs, credentials, company records, or customer data.
+This document explains the architecture from an enterprise ERP perspective while
+keeping proprietary source code, production URLs, credentials, company records,
+and customer data outside the public case study.
 
 ## Major Layers
 
@@ -163,7 +163,7 @@ Key characteristics:
 - PDF/print views for booking agreements, SR documents, challans, receipts, and
   reports
 
-The UI should be treated as an operational surface, not a marketing front end.
+The UI is treated as an operational surface, not a marketing front end.
 Screens support repeated daily work: booking, receiving, loading, weighing,
 delivery, collection, and reporting.
 
@@ -185,9 +185,9 @@ Important controller groups:
 - API controllers: authentication, desktop weight order list, weight sync,
   market/reference APIs
 
-Architecturally, controllers should remain orchestration points. Complex rules
-such as stock reservation, delivery quantity validation, and weight settlement
-belong in services so they can be reused and tested.
+Controllers act as orchestration points. Complex rules such as stock
+reservation, delivery quantity validation, and weight settlement belong in
+services so they can be reused and tested.
 
 ## Services
 
@@ -205,7 +205,7 @@ Observed service responsibilities:
 - Generate delivery numbers, parse dates, prepare manual/auto delivery data,
   print delivery documents, and handle due collection creation.
 
-Enterprise recommendation:
+Service design direction:
 
 - Continue moving delivery, loan settlement, rent calculation, and season close
   rules into services.
@@ -257,9 +257,9 @@ The architecture includes several external or adjacent systems:
 - **Authentication tokens**: API access for trusted clients.
 - **Windows/IIS runtime**: web server layer for enterprise deployment.
 
-Public case-study repositories should describe integration patterns only. They
-must not include real endpoints, device IDs, usernames, tokens, production paths,
-customer records, or environment values.
+This public case study describes integration patterns without including real
+endpoints, device IDs, usernames, tokens, production paths, customer records, or
+environment values.
 
 ## Weight Indicator Integration
 
@@ -282,9 +282,9 @@ Business value:
 
 ## Python / FastAPI Middleware
 
-The repository contains Python serial bridge scripts rather than a full FastAPI
-application. In an enterprise deployment, the same bridge can be packaged in two
-ways:
+The production integration uses a Python serial bridge pattern rather than
+coupling Laravel directly to the weighing device. In an enterprise deployment,
+the bridge can be packaged in two ways:
 
 - **Script mode**: a long-running Python process reads the serial port and posts
   readings directly to Laravel.
@@ -292,14 +292,14 @@ ways:
   device status, latest local reading, and controlled sync endpoints while a
   background worker reads the serial port.
 
-Recommended FastAPI responsibilities if this pattern is adopted:
+FastAPI service responsibilities in this pattern:
 
 - Own direct serial-port access on the Windows weighing workstation.
 - Provide local health/status endpoints for support teams.
 - Buffer readings locally during network interruption.
 - Attach stable machine and local row identifiers.
 - Retry sync safely after timeout or server error.
-- Never store Laravel credentials or production secrets in public code.
+- Keep Laravel credentials and production secrets outside public code.
 
 ## Windows IIS Deployment
 
@@ -319,17 +319,17 @@ flowchart LR
 
 Deployment considerations:
 
-- IIS should point the site root to Laravel's `public` directory.
-- URL rewriting should route application requests to `public/index.php`.
-- PHP should run through the configured IIS/PHP FastCGI runtime.
+- IIS points the site root to Laravel's `public` directory.
+- URL rewriting routes application requests to `public/index.php`.
+- PHP runs through the configured IIS/PHP FastCGI runtime.
 - File permissions must allow Laravel to write to `storage` and cache paths.
-- Environment configuration should live outside the public repository.
+- Environment configuration lives outside the public repository.
 - Scheduler/queue jobs, if used, should be configured through Windows Task
   Scheduler or a supervised worker process.
-- The Python bridge should run on the weighing workstation or a controlled local
+- The Python bridge runs on the weighing workstation or a controlled local
   service host with access to the serial device.
-- Production logs, uploads, database backups, `.env`, and credentials must not be
-  published.
+- Production logs, uploads, database backups, `.env`, and credentials are kept
+  out of the public repository.
 
 ## Security and Access Control
 
@@ -343,24 +343,24 @@ Security layers observed or implied by the application:
 - Login, MAC/IP, and activity logging tables
 - File upload references and document storage
 
-Public documentation rule:
+Public documentation scope:
 
-Do not publish real users, roles, permission exports, login logs, MAC addresses,
-IP addresses, API tokens, `.env` values, uploaded documents, or customer
-identity data.
+The public documentation excludes real users, roles, permission exports, login
+logs, MAC addresses, IP addresses, API tokens, `.env` values, uploaded
+documents, and customer identity data.
 
 ## Enterprise Architecture Notes
 
 - The modular monolith is appropriate for an ERP where modules share master data,
   users, reports, and transactions.
-- The cold storage workflow should be treated as a bounded domain inside the ERP.
-- Delivery and weight sync are high-integrity workflows and should remain
+- The cold storage workflow is treated as a bounded domain inside the ERP.
+- Delivery and weight sync are high-integrity workflows and remain
   service-driven and transaction-safe.
-- Reporting should read from transactional tables but avoid mutating operational
+- Reporting reads from transactional tables without mutating operational
   state.
-- External hardware integration should remain outside Laravel and communicate
+- External hardware integration remains outside Laravel and communicates
   through stable APIs.
-- IIS deployment should isolate public web files from application internals and
+- IIS deployment isolates public web files from application internals and
   protect operational storage directories.
 
 ## Challenges Solved

@@ -19,9 +19,9 @@ Delivery is the final operational checkpoint. It combines stock availability,
 machine weight, rent, labour/fanning charges, loan balance, advance collection,
 due calculation, and printed gate documents.
 
-This document is written for a public GitHub case study. It intentionally avoids
-company names, production URLs, customer records, credentials, and confidential
-business figures.
+This workflow summary focuses on the business process while excluding company
+names, production URLs, customer records, credentials, and confidential business
+figures.
 
 ## Main Workflow Diagram
 
@@ -96,8 +96,8 @@ addition to broader ERP customer data.
   transactions can be reliably linked.
 - Customer account references are used for collection and refund-related
   workflows.
-- Public documentation must never include real customer names, phone numbers,
-  account numbers, identity documents, addresses, or uploaded files.
+- Public examples use anonymized customer names, phone numbers, account numbers,
+  identity documents, addresses, and uploaded-file references.
 
 ## 3. Booking and Agreement
 
@@ -174,8 +174,8 @@ management visibility into cash collection against booked storage.
 - Payment date, payment mode, account reference, receivable amount, and received
   amount must be tracked.
 - Advance collections should be considered during final delivery settlement.
-- Collection records should remain auditable and should not expose sensitive
-  bank or account details in public examples.
+- Collection records remain auditable while public examples exclude sensitive
+  bank or account details.
 
 ## 6. Store Receive (SR)
 
@@ -390,7 +390,7 @@ without relying on manual summaries.
 - Daily statements should combine operational and financial status.
 - Loan recovery, party loan, booking collection, paid booking, SR, and daily
   pallet reports support different management decisions.
-- Public case-study reports should use sample or anonymized data only.
+- Public case-study reports use sample or anonymized data.
 
 ## 14. Season Closing and Due Migration
 

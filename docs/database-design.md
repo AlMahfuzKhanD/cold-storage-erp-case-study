@@ -273,7 +273,7 @@ delivery.
 **Sensitive fields hidden**
 
 Machine identifiers and desktop/local sync identifiers are described
-conceptually only. Real values must never be published.
+conceptually only. Real production values are excluded from this public design.
 
 **Relationship summary**
 
@@ -617,7 +617,7 @@ stock for delivery.
 ## Weight Data to Delivery
 
 Delivery settles selected weight rows. Once a weight row is marked as delivered,
-it should not be reused in another delivery. This protects stock accuracy.
+it is no longer available for another delivery. This protects stock accuracy.
 
 ## Delivery to Loans and Dues
 
@@ -674,12 +674,14 @@ and sale collections.
 Storage movement tables preserve historical actions. Current storage provides
 fast lookup for daily operations. Both are needed in a warehouse environment.
 
-## Public-Safe Documentation Rules
+## Public Documentation Scope
 
-- Do not publish full migrations or production schema dumps.
-- Do not expose sensitive customer, banking, identity, document, machine, or
-  user audit fields.
-- Use conceptual names such as `customer_reference`, `booking_reference`, and
-  `sync_reference` in diagrams.
-- Avoid sample data copied from production.
-- Keep diagrams focused on business relationships, not implementation details.
+- Full migrations and production schema dumps are outside the scope of this
+  case study.
+- Sensitive customer, banking, identity, document, machine, and user audit
+  fields are intentionally omitted.
+- Diagrams use conceptual names such as `customer_reference`,
+  `booking_reference`, and `sync_reference`.
+- Sample data, when added, will use demo or anonymized records.
+- Diagrams focus on business relationships rather than implementation-level
+  details.
