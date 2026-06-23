@@ -273,7 +273,7 @@ delivery.
 **Sensitive fields hidden**
 
 Machine identifiers and desktop/local sync identifiers are described
-conceptually only. Real production values are excluded from this public design.
+conceptually only. Real values must never be published.
 
 **Relationship summary**
 
@@ -379,21 +379,32 @@ Support a related stock and sales workflow for seed/potato inventory.
 erDiagram
     SEASON ||--o{ BOOKING : groups
     CUSTOMER ||--o{ BOOKING : owns
+
     BOOKING ||--o{ STORE_RECEIVE : receives
     BOOKING ||--o{ BOOKING_COLLECTION : collects
-    BOOKING ||--o{ LOAN : finances
-    BOOKING ||--o{ ORDER_HEADER : prepares
-    STORE_RECEIVE ||--o{ STORAGE_EVENT : records
-    STORE_RECEIVE ||--o{ ORDER_DETAIL : requested_for
+    BOOKING ||--o{ LOAN_RECORD : finances
+
     ORDER_HEADER ||--o{ ORDER_DETAIL : contains
+    BOOKING ||--o{ ORDER_DETAIL : requested_for
+    STORE_RECEIVE ||--o{ ORDER_DETAIL : selected_from
+
+    STORE_RECEIVE ||--o{ STORAGE_EVENT : records
+    STORAGE_EVENT ||--o{ STORAGE_MOVEMENT : contains
+
     ORDER_DETAIL ||--o{ WEIGHT_DATA : weighs
     STORE_RECEIVE ||--o{ WEIGHT_DATA : measured_as
+    BOOKING ||--o{ WEIGHT_DATA : belongs_to
+
     BOOKING ||--o{ DELIVERY_ORDER : releases
     DELIVERY_ORDER ||--o{ DELIVERY_DETAIL : contains
+    ORDER_DETAIL ||--o{ DELIVERY_DETAIL : fulfilled_by
     STORE_RECEIVE ||--o{ DELIVERY_DETAIL : delivered_from
+
     DELIVERY_ORDER ||--o{ DELIVERY_LOAN : settles
     DELIVERY_ORDER ||--o{ CUSTOMER_DUE : may_create
-    CUSTOMER_DUE ||--o{ DUE_COLLECTION : collected_by
+    DELIVERY_ORDER ||--o{ DUE_COLLECTION : collected_against
+    CUSTOMER ||--o{ CUSTOMER_DUE : owes
+    CUSTOMER ||--o{ DUE_COLLECTION : pays
 
     SEASON {
         int id
@@ -419,6 +430,18 @@ erDiagram
         decimal received_quantity
         decimal reserved_quantity
         decimal delivered_quantity
+    }
+
+    STORAGE_EVENT {
+        int id
+        string event_type
+        date event_date
+    }
+
+    STORAGE_MOVEMENT {
+        int id
+        decimal moved_bags
+        string storage_position
     }
 
     ORDER_HEADER {
@@ -448,13 +471,15 @@ erDiagram
 
     DELIVERY_DETAIL {
         int id
+        int order_detail_reference
         decimal delivered_bags
         decimal delivered_weight
     }
 
-    LOAN {
+    LOAN_RECORD {
         int id
         string loan_type
+        decimal loan_amount
         decimal outstanding_amount
     }
 
@@ -617,7 +642,7 @@ stock for delivery.
 ## Weight Data to Delivery
 
 Delivery settles selected weight rows. Once a weight row is marked as delivered,
-it is no longer available for another delivery. This protects stock accuracy.
+it should not be reused in another delivery. This protects stock accuracy.
 
 ## Delivery to Loans and Dues
 
@@ -674,14 +699,12 @@ and sale collections.
 Storage movement tables preserve historical actions. Current storage provides
 fast lookup for daily operations. Both are needed in a warehouse environment.
 
-## Public Documentation Scope
+## Public-Safe Documentation Rules
 
-- Full migrations and production schema dumps are outside the scope of this
-  case study.
-- Sensitive customer, banking, identity, document, machine, and user audit
-  fields are intentionally omitted.
-- Diagrams use conceptual names such as `customer_reference`,
-  `booking_reference`, and `sync_reference`.
-- Sample data, when added, will use demo or anonymized records.
-- Diagrams focus on business relationships rather than implementation-level
-  details.
+- Do not publish full migrations or production schema dumps.
+- Do not expose sensitive customer, banking, identity, document, machine, or
+  user audit fields.
+- Use conceptual names such as `customer_reference`, `booking_reference`, and
+  `sync_reference` in diagrams.
+- Avoid sample data copied from production.
+- Keep diagrams focused on business relationships, not implementation details.
