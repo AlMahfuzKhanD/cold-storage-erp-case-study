@@ -45,6 +45,8 @@ The domain has several important characteristics:
 
 ## Business Workflow
 
+![Cold Storage ERP business workflow](assets/Workflow.png)
+
 ```mermaid
 flowchart TD
     A["Season Setup"] --> B["Customer Setup"]
@@ -102,6 +104,8 @@ Detailed module catalog: [docs/modules.md](docs/modules.md)
 
 The application follows a modular monolith architecture:
 
+![Cold Storage ERP high-level architecture](assets/Architecture.png)
+
 ```mermaid
 flowchart TB
     UI["Blade UI\nForms, Reports, Print Views"] --> Routes["Laravel Routes + Middleware"]
@@ -135,8 +139,9 @@ Detailed architecture: [docs/architecture.md](docs/architecture.md)
 | Area | Technology / Pattern |
 | --- | --- |
 | Backend | Laravel 10, PHP 8.1+ |
-| UI | Blade templates, Bootstrap assets, JavaScript/AJAX |
-| Database | MySQL/MariaDB-style relational schema |
+| UI | Blade templates, Bootstrap assets, JavaScript/AJAX, Vue.js where needed |
+| Database | MySQL/MariaDB or MS SQL Server style relational schema |
+| Cache | Redis or file cache for short-lived operational data |
 | Authentication | Laravel web auth, role/permission model, Sanctum/JWT for APIs |
 | Reporting | PDF and spreadsheet export libraries |
 | Hardware bridge | Python serial middleware for weight indicator |
@@ -148,6 +153,8 @@ Detailed architecture: [docs/architecture.md](docs/architecture.md)
 
 The schema is designed around core cold-storage entities rather than generic
 CRUD tables.
+
+![Cold Storage ERP entity relationship diagram](assets/erd.png)
 
 Core entities:
 
@@ -189,24 +196,20 @@ Detailed database design: [docs/database-design.md](docs/database-design.md)
 
 ## Screenshots
 
-Sanitized screenshots will be added to show the operational screens and report
-outputs without exposing production data.
+The following screenshots show sanitized operational screens and report-style
+views from the cold storage workflow.
 
-Planned screenshot coverage:
+| Screen | Preview |
+| --- | --- |
+| Company dashboard | ![Company dashboard](screenshots/Dashboard.png) |
+| Order information list | ![Order information list](screenshots/Order-list.png) |
+| Delivery order list | ![Delivery order list](screenshots/DO-list.png) |
+| Auto delivery order entry | ![Auto delivery order entry](screenshots/Do-entry.png) |
 
-- `screenshots/01-dashboard-sanitized.png`
-- `screenshots/02-booking-form-sanitized.png`
-- `screenshots/03-store-receive-sanitized.png`
-- `screenshots/04-storage-location-sanitized.png`
-- `screenshots/05-weight-capture-sanitized.png`
-- `screenshots/06-delivery-settlement-sanitized.png`
-- `screenshots/07-reporting-sanitized.png`
+Public-data approach:
 
-Sanitization approach:
-
-- Confidential company branding is removed where required.
-- Customer names, phone numbers, addresses, account numbers, and identity data
-  are replaced with demo or anonymized values.
+- Demo company, booking, SR, order, and customer values are used for public
+  screenshots.
 - Production URLs and internal network paths are excluded.
 
 ## Lessons Learned
@@ -243,4 +246,4 @@ This case study intentionally excludes:
 - API credentials or tokens
 - Company names and confidential operational figures
 - Real customer, banking, identity, or uploaded document data
-- Production screenshots unless fully sanitized
+- Unsanitized production screenshots

@@ -16,7 +16,7 @@ and customer data outside the public case study.
 
 | Layer | Responsibility |
 | --- | --- |
-| UI Layer | Blade views, layouts, forms, reports, AJAX interactions, printable documents. |
+| UI Layer | Blade views, layouts, forms, reports, AJAX interactions, optional Vue.js widgets, printable documents. |
 | Routing and Middleware | Web/API route groups, authentication, authorization gates, locale handling, selected API throttle exceptions. |
 | Laravel Controllers | Request orchestration, validation, workflow entry points, report actions, AJAX lookups, print/export endpoints. |
 | Services | Business rules that need consistency, especially reservation, delivery stock sync, delivery creation/update/delete, and print generation. |
@@ -26,6 +26,8 @@ and customer data outside the public case study.
 | Deployment Runtime | Laravel on PHP under a Windows/IIS style deployment, with public web root, PHP process handler, database server, and local Python bridge where required. |
 
 ## High-Level Architecture Diagram
+
+![Cold Storage ERP high-level architecture](../assets/Architecture.png)
 
 ```mermaid
 flowchart TB
@@ -149,9 +151,10 @@ flowchart TD
 
 ## UI Layer
 
-The UI layer is primarily server-rendered through Laravel Blade templates. It is
-designed for operational ERP users who need structured forms, searchable lists,
-reports, and printable documents.
+The UI layer is primarily server-rendered through Laravel Blade templates, with
+JavaScript/AJAX and Vue.js-style components used where richer interactions are
+needed. It is designed for operational ERP users who need structured forms,
+searchable lists, reports, and printable documents.
 
 Key characteristics:
 
@@ -216,7 +219,9 @@ Service design direction:
 ## Database Layer
 
 The relational database is the source of truth. It stores operational records,
-financial settlement values, user/security data, and reporting history.
+financial settlement values, user/security data, and reporting history. The
+design is presented conceptually and can be implemented on MySQL/MariaDB-style
+or MS SQL Server-style relational storage.
 
 Major cold storage entity groups:
 

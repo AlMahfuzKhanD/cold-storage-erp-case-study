@@ -25,6 +25,8 @@ figures.
 
 ## Main Workflow Diagram
 
+![Cold Storage ERP business workflow](../assets/Workflow.png)
+
 ```mermaid
 flowchart TD
     A["Season Setup"] --> B["Customer and Account Setup"]
